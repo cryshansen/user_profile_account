@@ -1,0 +1,215 @@
+<?php
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_schema().
+ * creates the table in the database that matches the form field values 
+ * adds a secondary table of products TODO: figure out database inserts on install module.
+ */
+function user_profile_account_schema(){
+    $schema['user_profile_account_add_ons'] = array(
+        'description' => 'The order table for storing the user / product purchase information',
+        'fields' => array(
+            'id' => array(
+                'description' => 'Primary identifier for Product user purchases -- user must be a validated user to purchase a product.',
+                'type' => 'serial',
+                'not null' => TRUE,
+                'unsigned' => TRUE,
+            ),
+            'product_name' => array(
+                'description' => 'Product Name',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+			'description' => array(
+                'description' => 'Description of the product',
+                'type' => 'varchar',
+                'length' => 1000,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'price' => array(
+                'description' => 'Price of the product',
+                'type' => 'varchar',
+                'length' => 50,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+			'category' => array(
+                'description' => 'Placeholder: Categories of product purchased if applicable',
+                'type' => 'varchar',
+                'length' => 300,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+			'creation_date' => array(
+                'description' => 'Date Purchase made',
+                'type' => 'varchar',
+                'length' => 50,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+			'user_id' => array(
+                'description' => ' user id value',
+                'type' => 'int',
+                'length' => 11,
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+			'third_party_contact_id' => array(
+                'description' => 'Id of contact in ThirdParty',
+                'type' => 'varchar',
+                'length' => 15,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+			'product_id' => array(
+                'description' => 'Id of Product inventory',
+                'type' => 'varchar',
+                'length' => 15,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+        ),
+        'primary key' => array('id'),
+    );
+    /**  */
+    $schema['user_profile_account_product'] = array(
+        'description' => 'The table for storing the product information',
+        'fields' => array(
+            'id' => array(
+                'description' => 'Primary identifier for Product.',
+                'type' => 'serial',
+                'not null' => TRUE,
+                'unsigned' => TRUE,
+            ),
+            'product_name' => array(
+                'description' => 'Product Name',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'product_description' => array(
+                'description' => 'Product Description',
+                'type' => 'varchar',
+                'length' => 1000,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'product_category' => array(
+                'description' => 'Product Category -  Modules',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'product_license' => array(
+                'description' => 'Product License',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'product_price' => array(
+                'description' => 'Product price',
+                'type' => 'double',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'product_code' => array(
+                'description' => 'Product code',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => 'New-Product-Version',
+            ),
+        ),
+        'primary key' => array('id'),
+    );
+    /**  */
+    $schema['user_profile_account_payment'] = array(
+        'description' => 'The table for storing the payment information',
+        'fields' => array(
+            'id' => array(
+                'description' => 'Primary identifier for Product.',
+                'type' => 'serial',
+                'not null' => TRUE,
+                'unsigned' => TRUE,
+            ),
+            'item_number' => array(
+                'description' => 'Item Numbber',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'item_name' => array(
+                'description' => 'Item Name',
+                'type' => 'varchar',
+                'length' => 1000,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'payment_status' => array(
+                'description' => 'Product Description',
+                'type' => 'varchar',
+                'length' => 1000,
+                'not null' => TRUE,
+                'default' => '',
+                ),
+            'payment_amount'  => array(
+                'description' => 'Product Description',
+                'type' => 'double(10,2) ',
+                'length' => 1000,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'payment_currency'  => array(
+                'description' => 'Product Description',
+                'type' => 'varchar(255)',
+                'length' => 1000,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'txn_id'  => array(
+                'description' => 'Product Description',
+                'type' => 'varchar(255) ',
+                'length' => 1000,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+             'create_at' => array(
+                'description' => 'Product Description',
+                'type' => ' timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
+                'length' => 1000,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+        ),
+        'primary key' => array('id'),
+    );
+
+
+    return $schema;
+}
+/**
+*
+* Drupal\Core\Database\DatabaseExceptionWrapper: SQLSTATE[42000]: Syntax error or access violation: 1067 Invalid default value for 'user_id':
+ CREATE TABLE "drqd_user_profile_account_add_ons" ( "id" INT unsigned NOT NULL auto_increment COMMENT 'Primary identifier for Product user purchases -- user must be a validated user to purchase a product.', "product_name" VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Product Name', "description" VARCHAR(1000) NOT NULL DEFAULT '' COMMENT 'Description of the product', "price" VARCHAR(50) NOT NULL DEFAULT '' COMMENT 'Price of the product', "category" VARCHAR(300) NOT NULL DEFAULT '' COMMENT 'Placeholder: Categories of product purchased if applicable', "creation_date" VARCHAR(50) NOT NULL DEFAULT '' COMMENT 'Date Purchase made', "user_id" INT NOT NULL DEFAULT '' COMMENT ' user id value', "hs_contact_id" VARCHAR(15) NOT NULL DEFAULT '' COMMENT 'Id of contact in Hubspot', "product_id" VARCHAR(15) NOT NULL DEFAULT '' COMMENT 'Id of Product in Hubspot/ Web', PRIMARY KEY ("id") ) ENGINE = InnoDB DEFAULT CHARACTER SET utf8mb4 COMMENT 
+ 'The order table for storing the user/ product purchase…'; Array ( ) in Drupal\Core\Extension\ModuleInstaller->installSchema() (line 681 of /home/artogco/public_html/core/lib/Drupal/Core/Extension/ModuleInstaller.php).v
+function mymodule_install() {
+  \Drupal::database()->schema()->createTable('projected_sales', [
+    'fields' => [
+      'id' => ['type' => 'serial', 'not null' => TRUE],
+      'sales_date' => ['type' => 'datetime', 'not null' => TRUE],
+      'projected_sales' => ['type' => 'float', 'not null' => TRUE],
+    ],
+    'primary key' => ['id'],
+  ]);
+}
+*/
+

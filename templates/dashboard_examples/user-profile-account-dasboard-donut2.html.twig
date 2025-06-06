@@ -1,0 +1,86 @@
+
+<style>
+canvas {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+</style>
+  <script src="https://unpkg.com/chart.js@2.8.0/dist/Chart.bundle.js"></script>
+  <script src="https://unpkg.com/chartjs-gauge@0.3.0/dist/chartjs-gauge.js"></script>
+  <div id="canvas-holder" style="width:100%">
+<canvas width="768" height="384" style="display: block; box-sizing: border-box; height: 384px; width: 768px;"></canvas> 
+  </div>
+  <button id="randomizeData">Randomize Data</button>
+<script>
+var randomScalingFactor = function() {
+  return Math.round(Math.random() * 100);
+};
+
+var randomData = function () {
+  return [
+    randomScalingFactor(),
+    randomScalingFactor(),
+    randomScalingFactor(),
+    randomScalingFactor()
+  ];
+};
+
+var randomValue = function (data) {
+  return Math.max.apply(null, data) * Math.random();
+};
+
+//var data = randomData();
+//var value = randomValue(data);
+
+
+
+
+const DATA_COUNT = 6;
+const MIN = 0;
+const MAX = 100;
+
+const numberCfg = {count: DATA_COUNT, min: MIN, max: MAX, decimals: 0};
+
+const data = {
+  labels: ['Apples', 'Orange', 'Lime', 'Grapes', 'Apricots', 'Blackberries'],
+  datasets: [{
+    data: Utils.numbers(numberCfg)
+  }]
+};
+
+
+
+
+const annotation = {
+  type: 'doughnutLabel',
+  content: ({chart}) => [chart.getDatasetMeta(0).total,
+    'pieces of fruits'
+  ],
+  font: [{size: 48}, {size: 20}],
+  color: ['indigo', 'grey'],
+  backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  borderColor: 'black',
+  borderWidth: 2,
+  borderDash: [7, 7],
+  spacing: 2
+};
+
+
+const config = {
+  type: 'doughnut',
+  data,
+  options: {
+    aspectRatio: 2,
+    plugins: {
+      annotation: {
+        annotations: {
+          annotation
+        }
+      }
+    }
+  }
+};
+
+</script>

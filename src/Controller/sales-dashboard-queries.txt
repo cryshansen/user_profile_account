@@ -1,0 +1,159 @@
+
+    
+	// Average Sales Per Week Select week(order_date),avg(sale) from sales group by week(order_date);   pretty select concat('Week ',week(order_date)) as 'Week',round(avg(sale),2) as 'Average Sale' from sales group by week(order_date);
+  //    //select count(*) as totalWeeklySales from usca_sales_data_regional_pricing group by week(purchasedate); // where  date today for month or week
+    // $query2->condition();
+    // $query2->fields('up', array( 'id','industrytype','purchasedate','city','region','country','price_USD','payment_method','customer_segment','referral_source') );
+    // $monthly_totals = $query->execute()->fetchAll();
+
+
+    $today  = date("Y-m-d");
+    $lastmonth  =  date('Y-m-d', strtotime("-30 days"));
+
+    $date = new DateTime(); // Y-m-d
+    $date->add(new DateInterval('P30D'));
+    //echo $date->format('Y-m-d') . "\n";
+
+
+    $query2 = $connection->select('photography_sales_data', 'psd')
+    //count(*) as totalcount,
+    ->fields('psd', ['purchase_date'])
+    ->addExpression('DATE_FORMAT(purchase_date, "%Y-%m")', 'month')
+    ->addExpression('COUNT(*)', 'sales_count');
+    //select avg(sale) from sales 
+
+
+  // Add condition to only include sales from 2024 get todays date
+  $query2->condition('purchase_date', '2024-01-01', '>=');
+  $query2->condition('purchase_date', '2024-12-31', '<=');
+    ->groupBy('month')
+    ->orderBy('month', 'ASC');
+
+  $results = $query2->execute()->fetchAll();
+
+  $monthttl = [];
+  foreach ($results as $row) {
+    $monthttl[] = [
+      'month' => $row->month,
+      'sales_count' => (int) $row->sales_count,
+      'total_average_sales' => (int) $row->total_average_sales,
+      'total_sales' => round((float) $row->total_sales, 2),
+    ];
+  }
+  /**
+   * 
+   * average  sales  per week
+   *  Average Sales Per Week in MySQL
+   */
+/**
+ * 
+ * example calculate monthly growth rate  projected growth  month over month growth rate
+ * select month, sale,
+ *     if(@last_entry = 0, 0, round(((sale - @last_entry) / @last_entry) * 100,2)) "growth rate",
+ *    @last_entry := sale
+ *     from (select @last_entry := 0) x,
+ *     (select month, sum(sale) sale
+ *     from   monthly_sales
+ *    // WHERE condition
+ *     group by month) y;
+ */
+/**
+ * 
+ * $d=strtotime("tomorrow"); 
+ * echo date("Y-m-d h:i:sa", $d) . "<br>";
+ * $d=strtotime("next Saturday"); 
+ * echo date("Y-m-d h:i:sa", $d) . "<br>";
+ * $d=strtotime("+3 Months"); 
+ * echo date("Y-m-d h:i:sa", $d) . "<br>";
+ */
+/** week over week percentage growth
+ * select week, sale, 
+ *            if(@last_entry = 0, 0, round(((sale - @last_entry) / @last_entry) * 100,2)) "growth rate",          
+ *               @last_entry := sale
+ *      from ( select @last_entry := 0 ) x,
+ *            (select week, sum(sale) sale
+ *             from   (select week(order_date) as week,sum(sale) as sale
+ *                     from sales group by week(order_date)) weekly_sales
+ *      group by week) y;
+ * 
+ * 
+ * */ 
+	 /*
+   $con = \Drupal\Core\Database\Database::getConnection('default','default');
+		$query = $con->select('usca_sales_data_regional_pricing', 'up');
+    //$query = SELECT * FROM `usca_sales_data_regional_pricing` WHERE purchasedate >= NOW() + INTERVAL -7 DAY AND purchasedate < NOW() + INTERVAL 0 DAY order by purchasedate DESC;
+		//$query->condition('up.purchasedate', $user); //addExpression('AVG(t2.age)');
+    $query->andConditionGroup()
+      ->condition('purchasedate',' >= NOW() + INTERVAL -7 DAY')
+      ->condition('purchasedate',' < NOW() + INTERVAL 0 DAY');
+    
+      // Create the orConditionGroup
+$orGroup = $query->orConditionGroup()
+  ->condition('promoted', 1)
+  ->condition('uid', [2,4,7,22], 'IN');
+  
+// Add the group to the query.
+$query->condition($orGroup);
+
+
+
+    $query->condition('up.purchasedate', $user);			
+		$query->fields('up', array('user_id', 'id','description','product_name','price','category','creation_date','hs_contact_id','hs_product_id') );
+		*/
+
+
+/** get month dataset get last months data set  get this  month in one data set order by month for linear display  */
+/** select count(*) as totalMothlySales from usca_sales_data_regional_pricing group by month(purchasedate); 
+ * select count(*) as totalWeeklySales from tblcomplain group by week(purchasedate);
+ * SELECT *, COALESCE(`Total_Volume` -LAG(`Total_Volume`) OVER(PARTITION BY `ID` ORDER     BY `Sale_Date(YYYY-MM-DD)`), `Total_Volume`) AS `Daily_Sale` FROM tab
+ */
+/**create a  three month dropdown  */
+/**create a  three month dropdown  */
+/**
+ * 
+ * 
+ * WHERE   ( a = 1 OR b = 1) AND ( (c = 1 AND d = 1) OR (e = 1) )
+ * * The query conditions could be written with condition groups as:
+ * $orGroup1 = $query->orConditionGroup()
+ *   ->condition('a', 1)
+ *   ->condition('b', 1);
+ * 
+ * $andGroup1 = $query->andConditionGroup()
+ *   ->condition('c', 1)
+ *   ->condition('d', 1);
+ * 
+ * $orGroup2 = $query->orConditionGroup()
+ *   ->condition($andGroup1)
+ *   ->condition('e', 1);
+ * $query->condition($orGroup1);
+ * $query->condition ($orGroup2);
+ * 
+ * SELECT MONTHNAME(PERIOD) AS PeriodMonth, MAX(Money) AS MaxValue FROM table WHERE YEAR(Period) = 2023 GROUP BY MONTHNAME(PERIOD)
+ * 
+ */
+
+     Percentage growth month over month
+https://ubiq.co/database-blog/calculate-percentage-growth-month-month-mysql/
+
+
+
+select month, sale,
+    if(@last_entry = 0, 0, round(((sale - @last_entry) / @last_entry) * 100,2)) "growth rate",
+    @last_entry := sale
+    from
+    (select @last_entry := 0) x,
+    (select month, sum(sale) sale
+    from   monthly_sales
+    group by month) y;
+
+
+Week over week
+
+select week, sale,
+         if(@last_entry = 0, 0, round(((sale - @last_entry) / @last_entry) * 100,2)) "growth rate",
+         @last_entry := sale
+         from
+         (select @last_entry := 0) x,
+         (select week, sum(sale) sale
+         from   weekly_sales
+         group by week) y;

@@ -1,0 +1,5 @@
+user_profile_account.extratab:
+  route_name: user_profile_account.addons #here is route name of controller.
+  base_route: entity.user.canonical
+  title: 'Add-on Products'
+  weight: 20

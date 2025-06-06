@@ -1,0 +1,57 @@
+
+<div class="user-profile layout-three-column">
+  <div class="column-left">
+    <h3>User Information</h3>
+    {{ user_view }}
+		<div class="user-profile">
+		  <div class="profile-header">
+			<h2>{{ user.getDisplayName() }}</h2>
+			{% if user.user_picture.entity %}
+			  <div class="profile-picture">
+				{{ file_url(user.user_picture.entity.uri.value) }}
+			  </div>
+			{% else %}
+			  <div class="profile-picture">
+				<img src="/path/to/default/avatar.jpg" alt="Default Avatar">
+			  </div>
+			{% endif %}
+		  </div>
+		  <div class="profile-body">
+			<p><strong>Email:</strong> {{ user.getEmail() }}</p>
+			<p><strong>Member since:</strong> </p>
+		  </div>
+		</div>
+  </div>
+  <div class="column-center">
+    <h3>Profile Details</h3>
+    
+    <!-- Bootstrap 5 Tabs -->
+    <ul class="nav nav-tabs" id="profileTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">Product feature add-ons</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="activity-tab" data-bs-toggle="tab" data-bs-target="#activity" type="button" role="tab" aria-controls="activity" aria-selected="false">Tickets</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Invoices</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="profileTabContent">
+      <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+        <p>Product Addons here - incorporate the layout here</p>
+      </div>
+      <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+        <p>Tickets and support here</p>
+      </div>
+      <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+        <p>Invoices Here.</p>
+      </div>
+    </div>
+  </div>
+  <div class="column-right">
+    <h3>Payment Information</h3>
+    {{ payment_form }}
+  </div>
+</div>

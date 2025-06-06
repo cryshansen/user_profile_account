@@ -1,0 +1,144 @@
+<?php
+
+/**
+* Module handling all user related display and management of payments, invoices and ticketing
+*/
+
+/**
+ * Implements hook_theme() for custom profile layout.
+ */
+function user_profile_account_theme($existing, $type, $theme, $path) {
+
+  return [
+    'user_profile' => [
+      'variables' => [
+        'user' => NULL,
+        'user_view' => NULL,
+        'payment_form' => NULL,
+      ],
+      'template' => 'user-profile-account',
+      'path' => $path . '/templates',
+      'libraries' => ['user_profile_account/global-styling'],
+    ],
+    'user_profile2' => [
+      'variables' => [
+        'user' => NULL,
+        'user_view' => NULL,
+        'payment_form' => NULL,
+      ],
+      'template' => 'user-profile-account2',
+      'path' => $path . '/templates',
+      'libraries' => ['user_profile_account/global-styling'],
+    ],
+    'user_profile_gallery' => [
+      'template' => 'user-profile-account-galleries',
+      'path' => $path . '/templates',
+      'libraries' => ['user_profile_account/global-styling'],
+    ],
+    'user_profile_dasboard' => [
+      'template' => 'user-profile-account-dasboard',
+      'path' => $path . '/templates',
+       'variables' => [
+         'title' =>  'Derived Sales Table',
+          'salestbl' => [],  //'id','customer_name','email', 'industrytype','purchasedate','city','region','country','price_USD','payment_method','customer_segment','referral_source'
+          'current_week' => [],
+          'previous_week' => [],
+       ],
+      'libraries' => ['user_profile_account/global-styling'], /* change to an individual css adds based on styling */
+
+    ],
+    'user_profile_public_dasboard' => [
+      'template' => 'user-profile-account-dasboard',
+      'path' => $path . '/templates',
+       'variables' => [
+         'title' =>  'Sample Sales Tables',
+          'salestbl' => [],  //'id','customer_name','email', 'industrytype','purchasedate','city','region','country','price_USD','payment_method','customer_segment','referral_source'
+          'current_week' => [],
+          'previous_week' => [],
+       ],
+      'libraries' => ['user_profile_account/global-styling'], /* change to an individual css adds based on styling */
+
+    ],
+    'user_profile_weekly_dasboard' => [
+      'template' => 'user-profile-account-dasboard',
+      'path' => $path . '/templates',
+       'variables' => [
+         'title' =>  'Derived Sales Table',
+          'salestbl' => [],  //'id','customer_name','email', 'industrytype','purchasedate','city','region','country','price_USD','payment_method','customer_segment','referral_source'
+          'current_week' => [],
+          'previous_week' => [],
+       ],
+      'libraries' => ['user_profile_account/global-styling'], /* change to an individual css adds based on styling */
+
+    ],
+    'user_profile_month_dasboard' => [
+      'template' => 'user-profile-account-monthly-dasboard',
+      'path' => $path . '/templates',
+       'variables' => [
+         'title' =>  'Derived Monthly Sales Table',
+       ],
+      'libraries' => ['user_profile_account/global-styling'], /* change to an individual css adds based on styling */
+
+    ],
+    'user_profile_orderday_dasboard' => [
+      'template' => 'user-profile-account-orders-day-dasboard',
+      'path' => $path . '/templates',
+       'variables' => [
+         'title' =>  'Derived Orders by Day Table',
+       ],
+      'libraries' => ['user_profile_account/global-styling'], /* change to an individual css adds based on styling */
+
+    ],
+    'user_profile_industry_trend_dasboard' =>[
+      'template' => 'user-profile-account-industry-trend-dasboard',
+      'path' => $path . '/templates',
+       'variables' => [
+         'title' =>  'Derived Industry Trend For Week ',
+       ],
+      'libraries' => ['user_profile_account/global-styling'], /* change to an individual css adds based on styling */
+
+    ],
+    'user_profile_revenu_trend_dasboard' => [
+      'template' => 'user-profile-account-revenu-trend-dasboard',
+      'path' => $path . '/templates',
+       'variables' => [
+         'title' =>  'Derived Revenue Trend For Week ',
+       ],
+      'libraries' => ['user_profile_account/global-styling'], /* change to an individual css adds based on styling */
+    ],
+    'user_profile_customer_trend_dasboard' =>[
+        'template' => 'user-profile-account-customer-seg-dashboard',
+        'path' => $path . '/templates',
+        'variables' => [
+          'title' =>  'Derived Customer Segment Trend For Week ',
+        ],
+        'libraries' => ['user_profile_account/global-styling'], /* change to an individual css adds based on styling */
+    ],
+     'user-profile-add-ons' => [
+	      'render element' => 'children',
+          // If no template name is defined here,
+          // it defaults to the name of the theme hook,
+          // ie. module-name-theme-hook.html.twig
+          'template' => 'user-profile-add-ons',
+          // Optionally define path to Twig template files.
+          // Defaults to the module's ./templates/ directory.
+          'path' => $path . '/templates',
+          // Optionally define variables that will be passed to the Twig
+          // template and set default values for them.
+          'variables' => [
+            'title' => 'Add On Products',
+            'description' => 'View all available add on product modules for your account.',
+            'version' => NULL , 
+            'description' => '', 
+            'products' => ['name' =>'Photo toolbox','name'=>'Sales dashboard','name' => 'Editing Workflows', 'name' => 'Stock Photo toolbox'], 
+            'consulting' => ['One Hour Consultation','Specialized Photo Consulting', 'Specific Shoot Collaboration'],
+            'training' =>['Training Events by Interests', 'Customized Corporate Training', 'Lighting training'] ,
+		  
+          ],
+      ],
+  ];
+}
+function user_profile_account_cron() {
+  \Drupal::service('user_profile_account.sales_projection')->generateFutureSales();
+}
+

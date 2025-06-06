@@ -1,0 +1,66 @@
+
+
+<script>
+window.onload = function() {
+// JSON result
+let result = [{ "periodic_pmt": "2", "principle_balance": 416997.37661705, "principle_paid": 0, "ttl_principle_paid": 1002.6233829502, "interest_paid": 0, "ttl_interest_paid": 866.83015878773 }, { "periodic_pmt": 3, "principle_balance": 416600.29804453, "principle_paid": 538.02630958206, "ttl_principle_paid": 1540.6496925323, "interest_paid": 396.7004612869, "ttl_interest_paid": 1263.5306200746 }, { "periodic_pmt": 4, "principle_balance": 416203.59758324, "principle_paid": 538.40406076641, "ttl_principle_paid": 2079.0537532987, "interest_paid": 396.32271010256, "ttl_interest_paid": 1659.8533301772 }, { "periodic_pmt": 5, "principle_balance": 415807.27487314, "principle_paid": 538.78145224369, "ttl_principle_paid": 2617.8352055424, "interest_paid": 395.94531862527, "ttl_interest_paid": 2055.7986488025 }, { "periodic_pmt": 6, "principle_balance": 415411.32955451, "principle_paid": 539.15848435644, "ttl_principle_paid": 3156.9936898988, "interest_paid": 395.56828651252, "ttl_interest_paid": 2451.366935315 }];
+
+let labels = result.map(e => e.periodic_pmt);
+let data = result.map(e => e.principle_balance);
+
+let ctx = document.getElementById("myChart");
+let myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Line Component',
+            data: data
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        elements: {
+            line: {
+                fill: false
+            }
+        }
+    }
+});
+ 
+//$.getJSON("https://canvasjs.com/data/gallery/php/bitcoin-price.json", addData); 
+ 
+}
+</script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script> -->
+<canvas id="myChart"></canvas>
+                            
+
+<!-- 
+Left Side: total sales month year two linear chart displays current month to month previous
+SELECT * FROM `usca_sales_data_regional_pricing` WHERE purchasedate >= NOW() + INTERVAL -7 DAY AND purchasedate < NOW() + INTERVAL 0 DAY order by purchasedate DESC;
+
+
+
+
+Right side
+SELECT count(*) as `newcustomer` FROM  `usca_sales_data_regional_pricing` where `customer_segment`="New Customer" ;
+SELECT count(*) as `existing` FROM `usca_sales_data_regional_pricing` where `customer_segment` != "New Customer";  
+
+#last 7 days + %value + / - like stocks linear bar 
+Total orders lastt 7 days [pending,completed] skiny radius bar char
+Total cupons/discoounts lastt 7 days [Percentage,fixed card,fixed product] donut 
+Paying vs non-paying //could be free doownloads so can either drive / attract or most loved or us as sales guides -- guage style display
+Paying customer
+Non-paying customer
+-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.0/chart.min.js" integrity="sha512-lkEx3HSoujDP3+V+i46oZpNx3eK67QPiWiCwoeQgR1I+4kutWAuOSs3BxEUZt4U/mUfyY5uDHlypuQ1HHKVykA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  

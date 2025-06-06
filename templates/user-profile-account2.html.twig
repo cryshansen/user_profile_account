@@ -1,0 +1,517 @@
+
+<h2> Welcome to your account, {{ firstname }} </h2>
+
+<div class="my-minimal-page bg-light">
+<div class="container">
+    <div class="row">
+        <div class="col"><!-- <p>{{ message }}</p> -->
+            <div class="row">    
+                <nav>
+                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Overview</button>
+                    <button class="nav-link" id="nav-account-tab" data-bs-toggle="tab" data-bs-target="#nav-account" type="button" role="tab" aria-controls="nav-account" aria-selected="false">Account Security</button>
+                    <button class="nav-link" id="nav-plans-tab" data-bs-toggle="tab" data-bs-target="#nav-plans" type="button" role="tab" aria-controls="nav-plans" aria-selected="false">Products and Payment</button>
+                    <button class="nav-link" id="nav-support-tab" data-bs-toggle="tab" data-bs-target="#nav-support" type="button" role="tab" aria-controls="nav-support" aria-selected="false">Support</button>
+                    <button class="nav-link" id="nav-communication-tab" data-bs-toggle="tab" data-bs-target="#nav-communication" type="button" role="tab" aria-controls="nav-communication" aria-selected="false">Communication preferences</button>
+                  </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                  <div class="tab-pane bg-white fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="container p-0">
+                      <div class="row align-items-start p-3 mb-5">
+                        <div class="col">
+                          <div class="row shadow-sm p-3 bg-white rounded">
+                            <div class="col col-4">
+                            <!-- product type listing  based on user get -->
+                            <div class="card">
+                              <img src="https://artog.co/images/banner.jpg" class="card-img-top" alt="artogco">
+                              <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-plug"></i> License 1</h5>
+                                <p class="card-text">Get the most out of Artog products to maximize your analysis.</p>
+                                <p>Get the users product from deal/license</p>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#planModal"><i class="fas fa-rocket"></i> Manage plan</button>
+                              </div>
+                            </div>
+
+                            </div>
+                            <div class="col col-4">
+                                <div class="card">
+                                     <h5>Included in your plan:</h5>
+                                     <ul class="list-group">
+                                     {% for product in products %}
+                                       <li class="list-group-item p-0">
+                                            <div class="product">
+                                            <!-- <i class="fas fa-wave-square"></i> <i class="fas fa-water"></i><i class="fas fa-solar-panel"></i> -->
+                                            <span>{{ product.icon }}<span>{{ product.name }}</span></span> 
+                                            <!-- <p>{{ product.description }}</p>
+                                            <p>Price: ${{ product.price }}</p> -->
+                                          </div>
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                    plan_products
+                                    <ul class="list-group">
+                                     {% for product in plan_products %}
+                                       <li class="list-group-item p-0">
+                                            <div class="product">
+                                            <!-- <i class="fas fa-wave-square"></i> <i class="fas fa-water"></i><i class="fas fa-solar-panel"></i> -->
+                                            <span>{{ product.icon }}<span>{{ product.name }}</span></span> 
+                                            <!-- <p>{{ product.description }}</p>
+                                            <p>Price: ${{ product.price }}</p> -->
+                                          </div>
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                    
+                                    
+                                    
+                                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#includedModulesModal">5+ view more</a>
+                                   
+                                </div>
+                                <a class="nav-link btn artogco-btn" href="https://artog.co/download-apps"> Access your apps </a>
+                            </div>
+                            <div class="col col-4">
+                              <div class="card">
+                                  <div class="card-body">
+                                    <h5 class="card-title">Billing and payment</h5>
+                                    <p class="card-text">
+                                        <i class="fas fa-credit-card"></i> Mastercard ending in <sup>xxxx</sup>6789
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#billingModal">Edit Billing and Payment</button>
+                                        <i class="fas fa-calendar-alt"></i> CAD $value<br/>Next billing date <br /> Annual plan, paid monthly.
+                                     </p>
+                                    <a href="#" onclick="goToPlansOrders();return false;">View Billing History</a>
+                                  </div>
+                                </div>
+                            </div>
+
+                          
+                          </div><!-- plan row -->
+                          <div class="row mt-5 g-4 py-5 row-cols-1 row-cols-lg-3 shadow-sm p-3 mb-5 bg-white rounded">
+                              <div class="feature col">
+                                <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                  <i class="fas fa-project-diagram" style="color: #FF804A;"></i>
+                                </div>
+                                <h3 class="fs-2 text-body-emphasis">Consulting Services</h3>
+                                <p>Artogco offers various consulting services on building your profile and marketing strategies.</p>
+                                <a href="#" class="icon-link">
+                                  Get Started
+                                  <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+                                </a>
+                              </div>
+                              <div class="feature col">
+                                <div class="feature-icon d-inline-flex align-items-center justify-content-center  fs-2 mb-3">
+                                  <i class="fas fa-certificate" style="color: #FF804A;"></i>
+                                </div>
+                                <h3 class="fs-2 text-body-emphasis">On Demand Training</h3>
+                                <p>We offer training and courses on artistic photography in general. Basic courses on  artog features (get-started) and advanced courses with applications can be provided on-site or through the web.</p>
+                                <a href="#" class="icon-link">
+                                  View Options
+                                  <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+                                </a>
+                              </div>
+                              <div class="feature col">
+                                <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                                  <i class="fas fa-book" style="color: #FF804A;"></i>
+                                </div>
+                                <h3 class="fs-2 text-body-emphasis">Training Events</h3>
+                                <p>Access training packages available from our standard training schedule. </p>
+                                <a href="https:///artog.co/events/trainings" class="icon-link">
+                                 View Training schedule
+                                  <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+                                </a>
+                              </div>
+                        </div>
+                        </div><!-- col of row -->
+                        <!-- outer row column  of account area -->
+                        
+                        </div><!-- row -->
+                        
+                    </div><!-- container -->
+                  </div>  <!-- tab -->
+                  <div class="tab-pane bg-white  fade" id="nav-account" role="tabpanel" aria-labelledby="nav-account-tab">
+                      <div class="d-flex align-items-start">
+                          <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <button class="nav-link active" id="v-pills-account-tab" data-bs-toggle="pill" data-bs-target="#v-pills-account" type="button" role="tab" aria-controls="v-pills-account" aria-selected="true">Account</button>
+                            <button class="nav-link" id="v-pills-signin-security-tab" data-bs-toggle="pill" data-bs-target="#v-pills-signin-security" type="button" role="tab" aria-controls="v-pills-signin-security" aria-selected="false">Sign-in and Security</button>
+                            <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Data and Privacy settings</button>
+
+                          </div>
+                          <div class="tab-content" id="v-pills-tabContent">
+                            <div class="tab-pane fade show active" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab">                            
+                                <h4>Account information and access</h4>
+                                <p>This is the personal information you use to access and manage your account. It will appear in collaborations if your public profile is not complete. You can also add a mobile phone number and secondary email for account security, recovery, and notifications. If you are part of an enterprise organization, your enterprise directory identity may be used in collaborations with other members of your organization.</p>
+                            </div>
+                            <div class="tab-pane fade" id="v-pills-signin-security" role="tabpanel" aria-labelledby="v-pills-signin-security-tab">
+                                <h5>Sign-in and security</h5>
+                                <h6>Password</h6>
+                                <p>To change your password, verify your current password, then create a new password that you don’t use elsewhere. Change your password anytime you think it might have been compromised. For simple and secure sign-in, try the Adobe Account Access app to sign in without passwords.</p>
+                                <div class="bg-light">
+                                    <table><tr><td>Current password</td><td>************</td><td><button>change</button></td></tr></table>
+                                </div>
+                            
+                            </div>
+                            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">.
+                                <h5>Data privacy settings</h5>
+                                <h6>Desktop app usage</h6>
+                                <p>You have the option to share information with artogco about how you use our desktop apps. This information is associated with your Adobe account and allows us to provide you with a more personalized experience, as well as helps us improve product quality and features. This page allows you to change your preference on whether you share information with artogco on how you use our desktop applications. This setting does not apply to beta apps. Learn more.</p>
+                                <div class="shadow p-3 mb-5 bg-white rounded">
+                                    <div ="col"><p>Share information on how I use artogco</p></div>
+                                    <div ="col"><i class="toggle-icon fas fa-toggle-on"></i><!--<i class="fas fa-toggle-off"></i>--></div>
+                                </div>
+                                <h6>Content analysis for product improvement</h6>
+                                <p> When you use our apps, artogco may analyze your content processed or stored on our servers using techniques such as machine learning to improve our products and services. If you prefer that Adobe not do this, you can opt out of content analysis at any time. This setting does not apply when you separately choose to participate in product improvement programs. Learn more.</p>
+                                <div class="shadow p-3 mb-5 bg-white rounded">
+                                    <div ="col"><p>Allow artogco to analyze processed models or stored content on artogco server production iprovements. </p></div>
+                                    <div ="col"><i class="toggle-icon fas fa-toggle-off"></i></div>
+                                </div>
+                            </div>
+                           
+                          </div>
+                        </div>  
+                  </div>
+                  <div class="tab-pane bg-white  fade" id="nav-plans" role="tabpanel" aria-labelledby="nav-plans-tab">
+                    <div class="d-flex align-items-start">
+                      <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <button class="nav-link active" id="v-pills-plans-tab" data-bs-toggle="pill" data-bs-target="#v-pills-plans" type="button" role="tab" aria-controls="v-pills-plans" aria-selected="true">Products</button>
+                        <button class="nav-link" id="v-pills-orders-tab" data-bs-toggle="pill" data-bs-target="#v-pills-orders" type="button" role="tab" aria-controls="v-pills-orders" aria-selected="false">Orders and Invoices</button>
+                        <button class="nav-link" id="v-pills-devices-tab" data-bs-toggle="pill" data-bs-target="#v-pills-devices" type="button" role="tab" aria-controls="v-pills-devices" aria-selected="false">Activated Licenses</button>
+                     </div>
+                      <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-plans" role="tabpanel" aria-labelledby="v-pills-plans-tab">
+                            <h5 class="description"></h5>
+                            <div id="productContainer" class="container">
+                                <div class="row">
+                                <!-- plans -->
+                                    <div class="accordion" id="productsList"> <!-- plans accordion -->
+                                          {% for lic_product in license_products %}
+                                          <div class="accordion-item">
+                                            <h2 class="accordion-header p-0 m-0" id="heading{{ loop.index }}">
+                                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
+                                                  {{ lic_product.product_name }}
+                                              </button>
+                                            </h2>
+                                            <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#productsList">
+                                              <div class="accordion-body">
+                                                <p><strong>Product Description:</strong> {{ lic_product.product_type }} </p>
+                                              </div>
+                                            </div>
+                                          </div>	<!-- accordion item -->
+                                          {% endfor %}     
+                                    </div><!-- plans accordion -->    
+                                </div><!-- end plans -->
+                            </div>
+                        </div>
+                        <div class="tab-pane bg-white  fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-ordersprofile-tab">
+                            <div id="orders">
+                                <h4>Orders and Invoices<h4>
+                                <p>Review your order history, returns, boxed products, invoices, and more. </p>
+                                <div class="dropdown">
+                                      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="ordersLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                       Orders
+                                      </a>
+                                      <ul class="dropdown-menu" aria-labelledby="ordersLink">
+                                        <li><a class="dropdown-item" href="#">Orders</a></li>
+                                        <li><a class="dropdown-item" href="#">Returns</a></li>
+                                        <li><a class="dropdown-item" href="#">USB KEY</a></li>
+                                      </ul>
+                                      
+                                </div><!--  div orders dropdown --> 
+                                <table class="table">
+                                          <thead>
+                                            <tr>
+                                              <th scope="col">Date</th>
+                                              <th scope="col">Items</th>
+                                              <th scope="col">Cost</th>
+                                              <th scope="col">Order Number</th>
+                                              <th scope="col">Action</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr>
+                                              <td scope="row">Oct 30,2024</td>
+                                              <td>artogco Plan Item</td>
+                                              <td>CAD $7500.00</td>
+                                              <td>ABC12300000</td>
+                                              <td><button onclick="showInvoices()">View invoices</button></td>
+                                            </tr>
+                                            
+                                          </tbody>
+                                        </table>
+                            </div>  <!-- div id orders -->                             
+                            <div id="invoices" class="d-none">
+                                    <!-- Breadcrumb plan orders links -->
+                                    <a class="text-decoration-underline" onclick="goToTab('nav-plans-tab', 'v-pills-plans-tab');">Products</a> > 
+                                    <a class="text-decoration-underline" onclick="showOrders();"><u>Orders</u></a>
+                                    <h4>Invoice and billing history</h4>
+                                    <p>Invoice and billing historyReview your billing history and manage your invoices.</p>
+                                    <input type="text" name="search_orders" />
+                                    <table class="table">
+                                          <thead>
+                                            <tr>
+                                              <th scope="col">Date</th>
+                                              <th scope="col">Type</th>
+                                              <th scope="col">Order Number</th>
+                                              <th scope="col">Plan</th>
+                                              <th scope="col">Amount</th>
+                                              <th scope="col">Action</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr>
+                                              <td scope="row">Oct 30,2024</td>
+                                               <td>invoice/credit</td>
+                                              <td>ABC12300000</td>
+                                              <td>artogco Standard Node Lock</td>
+                                              <td>CAD $8750.00</td>
+                                              <td>
+                                                <button><i class="fas fa-eye"></i></button>
+                                                <button><i class="fa fa-download fa-lg"></i></button>
+                                                <button><i class="fas fa-envelope"></i></button>
+                                              </td>
+                                            </tr>
+                                            
+                                          </tbody>
+                                        </table>
+                            </div><!--  div id invoices -->
+                        </div>
+                        <div class="tab-pane bg-white fade" id="v-pills-devices" role="tabpanel" aria-labelledby="v-pills-devices-tab">
+                            <h4>Activated Licenses<h4>
+                            <p>You can install  applications on more than one computer, activate them (sign in) on two, but use them on only one computer at a time. To activate apps on a third machine, you’ll need to deactivate (sign out) on one of the two current computers first.</p>
+                            <div class="shadow p-3 mb-5 bg-white rounded">
+                                <table>
+                                    <tr>
+                                        <th>LICENSE</th>
+                                        <th>ACTIVATION DATE</th>
+                                        <th>ACTION</th>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>LAPTOP-KEHF on WINDOWS_64</td>
+                                        <td>Nov 4, 2024</td>
+                                        <td><button class="btn-outline-primary">Deactivate</button></td>
+                                    </tr>
+                                     <tr>
+                                        <td>Crystal Hansen on MACBOOK pro</td>
+                                        <td>Nov 4, 2024</td>
+                                        <td><button class="btn-outline-primary">Deactivate</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p class="italic text-muted small"><i>Two device per license maximum<i/></p></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <div ="col"></div>
+                                <div ="col"></div>
+                            </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane bg-white fade " id="nav-support" role="tabpanel" aria-labelledby="nav-support-tab">
+                    <div class="d-flex align-items-start">
+                      <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <button class="nav-link active" id="v-pills-support-ticket-history-tab" data-bs-toggle="pill" data-bs-target="#v-pills-support-ticket-history" type="button" role="tab" aria-controls="v-pills-support-ticket-history" aria-selected="true">Ticket History</button>
+                        <button class="nav-link" id="v-pills-submit-tickets-tab" data-bs-toggle="pill" data-bs-target="#v-pills-submit-tickets" type="button" role="tab" aria-controls="v-pills-submit-tickets" aria-selected="false">Submit a Ticket</button>
+                      </div>
+                      <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-support-ticket-history" role="tabpanel" aria-labelledby="v-pills-support-ticket-history-tab">
+                            <h3>{{ title }}</h3>
+                            <p>View all your account's tickets submitted to our support desk.</p>
+                            <p>{{ description }}</p>
+                           
+                              {% if tickets is not empty %}
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Subject</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for ticket in tickets %}
+                                            <tr>
+                                                <td>{{ ticket.date }}</td>
+                                                <td>{{ ticket.subject }}</td>
+                                                <td>{{ ticket.status }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <p>Create your first ticket <button>Create</button></p>
+                            {% endif %}
+                            
+                            <h4 class="description">{{ description }}</h4>
+                            {% for ticket in tickets %}
+                                <h3>{{ ticket.first_name }}  {{ ticket.phone }} {{ hubspot_id }}</h3>
+                                <p><strong>Subject of contact:</strong><br/> {{ ticket.subject }}   <br/> 
+                                <strong>Description of Support Request</strong> <br/> {{ ticket.description }}</p>
+                                <button>Retrieve response</button><button>Responde</button>
+                            {% endfor %}
+                            
+                            
+                            
+                        
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-submit-tickets" role="tabpanel" aria-labelledby="v-pills-submit-tickets-tab">
+                            <!--Submit a ticket-->
+                             <h3>Create a new Ticket</h3>
+                             <p>Get all your questions answered through our ticketing option.</p>
+                             
+                             {{ ticket_form }}
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="tab-pane bg-white  fade" id="nav-communication" role="tabpanel" aria-labelledby="nav-communication-tab">
+                  
+                    <div class="d-flex align-items-start">
+                      <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <button class="nav-link active" id="v-pills-communication-account-tab" data-bs-toggle="pill" data-bs-target="#v-pills-communication-account" type="button" role="tab" aria-controls="v-pills-communication-account" aria-selected="true">Account</button>
+                        <button class="nav-link" id="v-pills-offers-tab" data-bs-toggle="pill" data-bs-target="#v-pills-offers" type="button" role="tab" aria-controls="v-pills-offers" aria-selected="false">Offers and insights</button>
+                        <button class="nav-link" id="v-pills-news-tab" data-bs-toggle="pill" data-bs-target="#v-pills-news" type="button" role="tab" aria-controls="v-pills-news" aria-selected="false">Newsletters</button>
+                      </div>
+                      <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-communication-account" role="tabpanel" aria-labelledby="v-pills-communication-account-tab" tabindex="0">
+                            <h3>Account communication preferences</h3>
+                            <p>We occasionally need to send you emails related to your account, like billing issues or security alerts. These emails will be sent to your primary email address. You can also opt to receive updates by text message (SMS).
+                            Account lists email and sms in a vertical 3 column list item style block name value (required) or on off</p>
+                            <div class="shadow p-3 mb-5 bg-white rounded">
+                                <table>
+                                    <tr><td>Email</td><td>crystal.hansen@/artog.com</td><td><i>required</i></td></tr>
+                                    <tr><td>Phone (SMS)</td><td>Not added</td><td><i class="toggle-icon fas fa-toggle-off"></i> Off</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-offers" role="tabpanel" aria-labelledby="v-pills-offers-tab" tabindex="0">
+                            <h3>Offers and insights</h3>
+                            <h5>Latest from artogco<h5>
+                            <p>You can opt in to receive promotional messages from artogco about events, news, app updates, service and research opportunities.</p>
+                            <div class="shadow p-3 mb-5 bg-white rounded">
+                                <div ="col"><i class="fa-solid fa-square-check"></i><p>Email</p></div>
+                                <div ="col"><p>crystal.hansen@artogco</p></div>
+                                <div ="col"><i class="toggle-icon fas fa-toggle-off"></i></div>
+                            </div><i class="fa-solid fa-square-check"></i>
+                            <div class="shadow p-3 mb-5 bg-white rounded">
+                                <div ="col"><i class="fa-solid fa-square-minus"></i> <p>Phone</p></div>
+                                <div ="col"><p>not added</p></div>
+                                <div ="col"><button>Add</button></div>
+                                <p>This preference has not been set. click the box to indicate you would like to recieve the "latest from artogco" through sms.</p>
+                            </div>
+                            <div class="shadow p-3 mb-5 bg-white rounded">
+                                <div ="col"><i class="fa-solid fa-square-minus"></i> <p>Postal address</p></div>
+                                <div ="col"><p>QC, H2R0B2</p></div>
+                                <div ="col"><button>Remove</button><button>Change</button></div>
+                                <p>This preference has not been set. click the box to indicate you would like to recieve the "latest from artogco" through mailing.</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-news" role="tabpanel" aria-labelledby="v-pills-news-tab" tabindex="0">
+                            <h3>Newsletters</h3>
+                            <p>Subscribe to artogco's digital services, forums, code exchanges, updates and more.</p>
+                            <div class="shadow p-3 mb-5 bg-white rounded">
+                                <table>
+                                    <tr><th>Description</th><th>REGION</th><th>LANGUAGE</th><th>STATUS</th></tr>
+                                    <tr>
+                                        <td style="font-weight: 700;">
+                                            <div class="letter-title">Monthly Newsletter</div>
+                                            <div class="letter-body" style="font-size: 14px;font-weight: 400;line-height: 1.5;font-style: normal; letter-spacing: 0px;">
+                                                Priority Product Update monthly newsletter
+                                            </div>
+                                        </td>
+                                        <td>Global</td>
+                                        <td>USA - English</td>
+                                        <td><i class="toggle-icon fas fa-toggle-off"></i> Off</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="letter-title" style="font-size: 14px;font-weight: 700;line-height: 1.5;font-style: normal; letter-spacing: 0px;" >Security Notifications Registration</div>
+                                            <div class="letter-body" style="font-size: 14px;font-weight: 400;line-height: 1.5;font-style: normal; letter-spacing: 0px;">
+                                                artogco Security bulletin. Keeping you safe and up to date. 
+                                            </div>
+                                        </td>
+                                        <td>Global</td>
+                                        <td>USA - English</td>
+                                        <td><i class="toggle-icon fas fa-toggle-off"></i> Off</td>
+                                    </tr>
+                                    <tr>    
+                                        <td>User Conferences</td><td>Global</td>
+                                        <td>USA - English</td><td><i class="toggle-icon fas fa-toggle-on"></i> On</td>
+                                    </tr>
+                                    <tr>
+                                        <td> 
+                                            <div class="letter-title" style="font-size: 14px;font-weight: 700;line-height: 1.5;font-style: normal; letter-spacing: 0px;" >Training - digital academy</div>
+                                            <div class="letter-body" style="font-size: 14px;font-weight: 400;line-height: 1.5;font-style: normal; letter-spacing: 0px;">
+                                                To help companies build modern apprenticeship programs, we created an open-source playbook explaining our process, tips and best practices.
+                                            </div>
+                                        </td><td>Global</td>
+                                        <td>USA - English</td>
+                                        <td><i class="toggle-icon fas fa-toggle-off"></i> Off</td>
+                                    </tr>
+                                    </tr>
+                                    <tr>
+                                        <td> 
+                                            <div class="letter-title" style="font-size: 14px;font-weight: 700;line-height: 1.5;font-style: normal; letter-spacing: 0px;" >Education Exchange</div>
+                                            <div class="letter-body" style="font-size: 14px;font-weight: 400;line-height: 1.5;font-style: normal; letter-spacing: 0px;">
+                                                The artogco newsletter shares teaching resources, professional development, and events for educators and school leaders.
+                                        </div>
+                                    </td><td>North America</td>
+                                        <td>USA - English</td>
+                                        <td><i class="toggle-icon fas fa-toggle-on"></i> On</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div></div>
+                  </div><!-- tab-pane communication-tab end -->
+                </div>
+
+                <div class="col-2"> <!-- outer column in outer row  account profile area -->
+                    <ul style="list-style-type: none;">
+                        <li class="nav-item">
+                        <div class="account-profile-details">
+                            <span style="font-size: 3rem;">
+                                <span style="color: Mediumslateblue;">
+                                    <i class="fas fa-user-tie"></i>
+                                </span>
+                            </span>
+                            <div class="account-profile-information boder-bottom">
+                                <h3>{{ user.name.value }} {{ user.firstname.value }} {{ user.lastname.value }}</h3>
+                                <a>
+                                <a class="nav-link btn artogco-btn" href="{{ path('entity.user.edit_form', {'user': user.id}) }}">Edit profile </a>
+                            </div>
+                        </div>
+                            <!-- <i class="fas fa-user-circle"></i> -->
+                            <!-- <i class="fas fa-user-astronaut"></i> -->
+                        </li>
+                        <hr />
+                        {% if user %}
+                            <li class="nav-item">
+                                {{ user.mail.value}}<br/>
+                            <a class="nav-link" href="{{ path('entity.user.edit_form', {'user': user.id}) }}" tabindex="-1" aria-disabled="true">Change Email</a>
+                          </li>
+                          <hr />
+                        {% endif %}
+                          <li class="nav-item">
+                            <p>Password last changed 6 months ago{{ timeago }}</p>
+                            <a class="nav-link" href="{{ path('user.pass') }}" tabindex="-1" aria-disabled="true">Change password</a>
+                          </li>
+                          <hr />
+                    </ul>
+                </div><!-- end outer column col-2 TODO: Move to outside container level -->        
+             </div> <!-- outermost row -->
+        </div><!-- closing of the outermost container-->
+    </div><!--outer page container-->
+</div><!-- my page -->

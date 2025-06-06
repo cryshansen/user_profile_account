@@ -1,0 +1,35 @@
+
+    <h3>Current Week Sales (Last 7 Days)</h3>
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Sales Count</th><th>Total Sales (USD)</th></tr>
+      </thead>
+      <tbody>
+        {% for day in current_week_sales %}
+          <tr>
+            <td>{{ day.day }}</td>
+            <td>{{ day.sale_count }}</td>
+            <td>${{ day.total_sales|number_format(2, '.', ',') }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h3>Previous Week Sales</h3>
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Sales Count</th><th>Total Sales (USD)</th></tr>
+      </thead>
+      <tbody>
+        {% for day in previous_week_sales %}
+          <tr>
+            <td>{{ day.day }}</td>
+            <td>{{ day.sale_count }}</td>
+            <td>${{ day.total_sales|number_format(2, '.', ',') }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    
+<h2>Current Week Sales Chart</h2>
+<canvas id="currentWeekChart" width="400" height="200"></canvas>

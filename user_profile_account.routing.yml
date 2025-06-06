@@ -1,0 +1,87 @@
+user_profile_account.profile:
+  path: '/user/{user}/profile'
+  defaults:
+    _controller: '\Drupal\user_profile_account\Controller\UserProfileController::view'
+    _title: 'User Profile'
+  requirements:
+    _permission: 'access user profiles'
+    user: \d+
+user_profile_account.addons:
+  path: '/user/{user}/add-ons'
+  defaults:
+    _controller: '\Drupal\user_profile_account\Controller\AddonsController::addons'
+    _title: 'Get more out of Artogco'
+  requirements:
+    _permission: 'access content'
+    user: \d+
+user_profile_account.addon-payment:
+  path: '/user/{user}/addon-payment/{cart}'
+  defaults:
+    _controller: '\Drupal\user_profile_account\Controller\AddonsController::processPayment'
+    _title: 'Process Payments'
+  requirements:
+    _permission: 'access content'
+    user: \d+
+user_profile_account.galleries:
+  path: '/user/{user}/image-galleries'
+  defaults:
+    _controller: '\Drupal\user_profile_account\Controller\ImageGalleryController::galleries'
+    _title: 'User Gallery Options'
+  requirements:
+    _permission: 'access content'
+    user: \d+
+user_profile_account.dashboard:
+  path: '/user/{user}/dashboard'
+  defaults:
+    _controller: '\Drupal\user_profile_account\Controller\DashboardController::dashboard'
+    _title: 'Sales Dashboard'
+  requirements:
+    _permission: 'access content'
+    user: \d+
+user_profile_account.dashboard_demo:
+  path: '/dashboard/demo'
+  defaults:
+    _controller: '\Drupal\user_profile_account\Controller\DashboardController::dashboardDemo'
+    _title: 'Demo Sales Dashboard'
+  requirements:
+    _access: 'TRUE'
+user_profile_account.monthlydashboard:
+  path: '/user/{user}/monthly-dashboard'
+  defaults:
+    _controller: '\Drupal\user_profile_account\Controller\DashboardController::monthlyDashboard'
+    _title: 'Sales Dashboard'
+  requirements:
+    _permission: 'access content'
+    user: \d+
+user_profile_account.orders-perday-dashboard:
+  path: '/user/{user}/orders-perday-dashboard'
+  defaults:
+    _controller: '\Drupal\user_profile_account\Controller\DashboardController::ordersPerDayDashboard'
+    _title: 'Orders Per Day Dashboard'
+  requirements:
+    _permission: 'access content'
+    user: \d+
+user_profile_account.industry-trend-dashboard:
+  path: '/user/{user}/industry-trend-dashboard'
+  defaults:
+    _controller: '\Drupal\user_profile_account\Controller\DashboardController::industryTrendDashboard'
+    _title: 'Industry Trend Dashboard'
+  requirements:
+    _permission: 'access content'
+    user: \d+
+user_profile_account.customer-trend-dashboard:
+  path: '/user/{user}/customer-trend-dashboard'
+  defaults:
+    _controller: '\Drupal\user_profile_account\Controller\DashboardController::customerSegmentDashboard'
+    _title: 'Customer Segment Trend Dashboard'
+  requirements:
+    _permission: 'access content'
+    user: \d+
+user_profile_account.revenu-trend-dashboard:
+  path: '/user/{user}/revenu-trend-dashboard'
+  defaults:
+    _controller: '\Drupal\user_profile_account\Controller\DashboardController::revenueTrendDashboard'
+    _title: 'Revenue Referral Type Trend Dashboard'
+  requirements:
+    _permission: 'access content'
+    user: \d+

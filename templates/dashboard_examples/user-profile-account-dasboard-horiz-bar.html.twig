@@ -1,0 +1,222 @@
+
+<style>
+.title{
+  text-align:center;
+  color:#fff;
+  font-size:20px;
+  padding:0px 10px 5px 10px;
+}
+
+.tooltip{
+  display:flex;
+  justify-content:center;
+  padding : 5px 0;
+  color: #fff;
+    .box{
+      height:10px;
+      width:10px;
+    }
+
+    .box1{
+      background-color:#DA1726;
+    }
+    .box2{
+      background-color: #FFDD40;
+    }
+    .box3{
+      background-color: #47CF73;
+    }
+    .text{
+      padding: 0 10px;
+      font-size:11px;
+    }
+  }
+
+.chart-container {
+  position: relative;
+  max-width: 800px;
+  margin: auto;
+}
+
+
+</style>
+  <script src="https://unpkg.com/chart.js@2.8.0/dist/Chart.bundle.js"></script>
+  <script src="https://unpkg.com/chartjs-gauge@0.3.0/dist/chartjs-gauge.js"></script>
+
+<div class="title">Movie Ratings in Percentage</div>
+<div class="tooltip">
+    <div class="box box1"></div>
+    <div class="text">40% lower bound</div>
+    <div class="box box2"></div>
+    <div class="text">60% average</div>
+    <div class="box box3"></div>
+    <div class="text">80% upper bound</div>   
+</div>
+
+<div class="chart-container bar-line">   
+ <canvas id="HorizontalBarWithLines" width="700"></canvas>
+</div>
+
+
+
+
+
+
+
+  </div>
+  <button id="randomizeData">Randomize Data</button>
+<script>var movies = {
+  0: {
+    movieName: "Inception",
+    moviePercentage: 100
+  },
+  1: {
+    movieName: "Forest Gump",
+    moviePercentage: 80
+  },
+  2: {
+    movieName: "The Gift",
+    moviePercentage: 92
+  },
+  3: {
+    movieName: "It Follows",
+    moviePercentage: 36
+  },
+  4: {
+    movieName: "Split",
+    moviePercentage: 54
+  },
+  5: {
+    movieName: "The Shawshank Redemption",
+    moviePercentage: 98
+  },
+  6: {
+    movieName: "Nocturnal Animals",
+    moviePercentage: 86
+  },
+  7: {
+    movieName: "Sixth Sense",
+    moviePercentage: 91
+  }
+};
+var moviesLength = Object.keys(movies).length;
+
+var callBarChart = function() {
+  var barLine = null;
+
+  $("canvas#HorizontalBarWithLines").remove();
+  $("div.bar-line").append(
+    '<canvas id="HorizontalBarWithLines" width="700"></canvas>'
+  );
+
+  var canvas = document.getElementById("HorizontalBarWithLines");
+  canvas.height = moviesLength * 50;
+
+  var movieName = [];
+  var moviePercentage = [];
+
+  for (var i = 0; i < moviesLength; i++) {
+    movieName.push(movies[i]["movieName"]);
+    moviePercentage.push(movies[i]["moviePercentage"]);
+  }
+
+  var data = {
+    labels: movieName,
+    datasets: [
+      {
+        label: "Percentage",
+        backgroundColor: "#0EBEFF",
+        fill: true,
+        data: moviePercentage
+      }
+    ]
+  };
+
+  var ctx = document.getElementById("HorizontalBarWithLines").getContext("2d");
+
+  const verticalLine = {
+    renderVerticalLine: function(chartInstance, pointIndex, i) {
+      const xaxis = chartInstance.scales["x-axis-0"];
+      const yaxis = chartInstance.scales["y-axis-0"];
+      const context = chartInstance.chart.ctx;
+
+      // render vertical line
+      context.beginPath();
+
+      if (i === 0) {
+        context.strokeStyle = "#DA1726";
+      } else if (i === 1) {
+        context.strokeStyle = "#FFDD40";
+      } else if (i === 2) {
+        context.strokeStyle = "#47CF73";
+      }
+
+      context.moveTo(xaxis.getPixelForValue(pointIndex), yaxis.top);
+      context.lineTo(xaxis.getPixelForValue(pointIndex), yaxis.bottom);
+      context.stroke();
+    },
+
+    afterDatasetsDraw: function(chart, easing) {
+      if (chart.config.lineAtIndex) {
+        var index = [];
+        index = chart.config.lineAtIndex;
+        for (i = 0; i < index.length; i++) {
+          this.renderVerticalLine(chart, index[i], i);
+        }
+      }
+    }
+  };
+
+  Chart.plugins.register(verticalLine);
+
+  if (barLine != null) {
+    barLine.remove();
+  }
+
+  barLine = new Chart(ctx, {
+    type: "horizontalBar",
+    data: data,
+    options: {
+      responsive: true,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [
+          {
+            display: true,
+            ticks: {
+              display: true,
+              fontColor: "#fff",
+              beginAtZero: true,
+              stepSize: 10,
+              max: 100
+            },
+            gridLines: {
+              display: false
+            }
+          }
+        ],
+        yAxes: [
+          {
+            barPercentage: 0.4,
+            ticks: {
+              display: true,
+              fontColor: "#fff"
+            },
+            gridLines: {
+              display: false
+            }
+          }
+        ]
+      }
+    },
+    label: "Progress",
+    lineAtIndex: [40, 60, 80]
+  });
+};
+
+callBarChart();
+
+
+</script>
